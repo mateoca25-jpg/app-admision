@@ -3,7 +3,7 @@
 // Subir el número de CACHE_NOMBRE cuando se quiera forzar a los usuarios a bajar de
 // nuevo los archivos (por ejemplo, al reconvertir datos/preguntas.json).
 
-const CACHE_NOMBRE = "app-admision-v1";
+const CACHE_NOMBRE = "app-admision-v2";
 
 const ARCHIVOS_PARA_CACHEAR = [
   "./",
