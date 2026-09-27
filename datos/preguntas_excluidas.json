@@ -1,0 +1,147 @@
+[
+  {
+    "id": 185,
+    "motivo": "respuesta_correcta_no_coincide_con_ninguna_opcion",
+    "respuesta_original": "D",
+    "opciones_encontradas": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  {
+    "id": 285,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": null
+  },
+  {
+    "id": 336,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Mujer de 30 años con palpitaciones súbitas y ansiedad.\nConsulta por episodios de taquicardia súbita, sensación de opresión torácica y mareo leve. Ocurre en reposo y dura entre 10 y 30 minutos, resolviéndose espontáneamente.\n\nAntecedentes: Ninguno relevantes.\n\nExamen físico en urgencias:\n\nPA 118/75 m"
+  },
+  {
+    "id": 358,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": null
+  },
+  {
+    "id": 1621,
+    "motivo": "respuesta_correcta_no_coincide_con_ninguna_opcion",
+    "respuesta_original": "D",
+    "opciones_encontradas": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  {
+    "id": 3201,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": null
+  },
+  {
+    "id": 3237,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": null
+  },
+  {
+    "id": 4254,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Una mujer de 65 años con insuficiencia renal crónica (TFG 20 mL/min) presenta disuria, fiebre y dolor lumbar tras 1 mes con catéter vesical permanente mal manejado. El urocultivo crece E. coli resistente, y la TAC muestra \"signo de aire\" en pelvis renal. ¿Cuál es el diagnóstico? \nA)\nB) Pielonefritis"
+  },
+  {
+    "id": 4342,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Mujer de 55 años con síntomas urinarios irritativos crónicos sin infección confirmada en múltiples urocultivos. Se realiza cistoscopía, encontrando petequias y úlceras de Hunner. ¿Cuál es el diagnóstico? B) Cistitis intersticial C) Tuberculosis urinaria D) Síndrome de vejiga hiperactiva E) Uretritis"
+  },
+  {
+    "id": 4343,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Hombre de 65 años con diabetes mellitus mal controlada consulta por fiebre, disuria y orina fétida. Urocultivo: Klebsiella pneumoniae, pH urinario 8.0. ¿Cuál es la principal complicación asociada? B) Formación de cálculos coraliformes C) Necrosis papilar D) Absceso renal E) Pielonefritis xantogranul"
+  },
+  {
+    "id": 4344,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Hombre de 72 años con infección urinaria recurrente y síntomas obstructivos. Al examen digital, la próstata es indurada y dolorosa. ¿Cuál es el diagnóstico más probable? B) Prostatitis bacteriana crónica C) Cáncer de próstata D) Prostatodinia E) Síndrome de vejiga neurogénica"
+  },
+  {
+    "id": 4345,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Hombre de 40 años con fiebre, dolor lumbar y antecedentes de infecciones urinarias previas. La tomografía revela una masa hipodensa con gas en el parénquima renal. ¿Cuál es el diagnóstico? B) Pielonefritis enfisematosa C) Absceso renal D) Necrosis papilar E) Pielonefritis xantogranulomatosa"
+  },
+  {
+    "id": 4346,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Niño de 4 años con infecciones urinarias recurrentes y dilatación ureteral en ecografía. Se sospecha reflujo vesicoureteral. ¿Cuál es el tratamiento de primera línea? B) Profilaxis antibiótica con seguimiento C) Cirugía correctiva inmediata D) Cateterismo vesical intermitente E) Terapia con anticoli"
+  },
+  {
+    "id": 4372,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Un estudio evalúa la relación entre el consumo de tabaco y el cáncer de pulmón en 1000 pacientes, comparando fumadores vs. no fumadores y midiendo la incidencia en cada grupo. ¿Qué tipo de estudio es este? B) Cohorte C) Ensayo clínico aleatorizado D) Caso-control E) Transversal"
+  },
+  {
+    "id": 4373,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Un meta-análisis evalúa 20 estudios sobre un nuevo tratamiento para hipertensión y encuentra un riesgo relativo (RR) de 0.75 (IC 95%: 0.68-0.82, p <0.05). ¿Qué interpretación es correcta? B) El tratamiento reduce significativamente el riesgo de hipertensión en un 25% C) No hay diferencia significati"
+  },
+  {
+    "id": 4374,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Un investigador estudia el uso de estatinas y el desarrollo de eventos cardiovasculares en una base de datos hospitalaria. Se encuentra que los pacientes con estatinas tienen menos eventos, pero también son más saludables en general. ¿Qué sesgo es más probable? B) Sesgo de selección C) Sesgo de info"
+  },
+  {
+    "id": 4375,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "En un ensayo clínico sobre un nuevo antibiótico, los pacientes en el grupo placebo tienen más abandonos del estudio por mala evolución que el grupo tratado. ¿Cómo afecta esto los resultados? B) Sesgo de atrición que sobreestima el efecto del tratamiento C) Sesgo de memoria que altera la recolección "
+  },
+  {
+    "id": 4376,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Un estudio reporta que en una población con incidencia de infarto del 10%, el uso de un nuevo fármaco reduce este riesgo absoluto al 5%. ¿Cuál es el número necesario a tratar (NNT)? B) 20 C) 10 D) 5 E) 2"
+  },
+  {
+    "id": 4877,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Niño de 4 años con fiebre de 40°C y convulsión febril hace 1 hora llega a urgencias. Postcrisis está letárgico, con rigidez de nuca y signo de Kernig positivo. Punción lumbar: líquido turbio, glucosa 20 mg/dL, proteínas 200 mg/dL, leucocitos 1.500/mm³ (90% neutrófilos). ¿Cuál es el germen más probab"
+  },
+  {
+    "id": 4905,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Hombre de 38 años con VIH (CD4 150/mm³) consulta por cefalea intensa, fiebre de 38.5°C y fotofobia de 4 días. Examen: rigidez de nuca, signo de Brudzinski positivo. TAC normal. Punción lumbar: presión de apertura 30 cmH₂O, líquido turbio, glucosa 15 mg/dL, proteínas 250 mg/dL, leucocitos 2.000/mm³ ("
+  },
+  {
+    "id": 5353,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "En un paciente de 15 años con una atelectasia lobar media y adenopatía hiliar ¿cuál es la causa más probable? a. Infección por Mycoplasma pneumoniae b. Infección por Haemophilus influenzae c. Tuberculosis primaria d."
+  },
+  {
+    "id": 5355,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "¿Cuál es la causa más frecuente de hemorragia subaracnoidea espontánea? a. Malformaciones arterio venosas b. Hipertensión arterial c. Aneurisma sacular roto d."
+  },
+  {
+    "id": 5356,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "¿Cuál de los siguientes síntomas y signos son menos probables que aparezcan en la sepsis neonatal temprana? a. Hepatoesplenomegalia, PCR aumentada y gránulos tóxicos en Leucocitos b. Letargia, Vómito, hiporexia c. leucopenia/trombocitopenia, ictericia, distensión abdominal d."
+  },
+  {
+    "id": 7215,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Explicación: La infección congénita por citomegalovirus (CMV) se asocia con calcificaciones periventriculares, hepatoesplenomegalia, petequias y restricción del crecimiento intrauterino. Errores comunes: - B) Dilatación ventricular: más común en hidrocefalia postinfecciosa. - C) Atrofia cerebelosa: "
+  },
+  {
+    "id": 7222,
+    "motivo": "no_se_pudieron_separar_las_opciones",
+    "texto_original": "Explicación: La enfermedad de Hirschsprung se debe a ausencia de células ganglionares en el plexo mientérico, causando megacolon congénito. El enema con contraste muestra la imagen en \"cono\" o \"zona de transición\". Errores comunes: - B) Malrotación intestinal: cursa con vómitos biliosos y obstrucció"
+  },
+  {
+    "id": 8680,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": "Todos se evalúan"
+  },
+  {
+    "id": 8681,
+    "motivo": "sin_respuesta_correcta_valida",
+    "respuesta_original": "Ninguna es correcta"
+  }
+]
