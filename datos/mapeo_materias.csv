@@ -23,6 +23,7 @@ Cx general,Cirugía General,1,no
 Cirugía General -,Cirugía General,1,no
 Cirugía Maxilofacial,Cirugía Maxilofacial,5,no
 Cirugía Pediátrica,Cirugía Pediátrica,3,no
+Síndrome de ASIA,Cirugía Plástica,10,no
 Cirugía Torácica,Cirugía Torácica,13,no
 Cirugía torácica,Cirugía Torácica,1,no
 Cirugía Vascular,Cirugía Vascular,53,no
@@ -32,40 +33,8 @@ Cirugía de Trauma,Cirugía de Trauma,3,no
 Medicina Paliativa,Cuidados Paliativos,2,no
 Cuidados Paliativos,Cuidados Paliativos,2,no
 Cuidado Paliativo,Cuidados Paliativos,1,no
-Legal,DUDOSA,12,sí
-Síndrome de ASIA,DUDOSA,10,sí
-Medicina Histórica,DUDOSA,10,sí
-Literatura,DUDOSA,9,sí
-Derecho,DUDOSA,9,sí
-VIH,DUDOSA,9,sí
-Emergencias,DUDOSA,8,sí
-Trauma,DUDOSA,6,sí
-Geografía,DUDOSA,5,sí
-Derecho Médico,DUDOSA,5,sí
-Música,DUDOSA,4,sí
-Patología,DUDOSA,4,sí
-Vascular,DUDOSA,3,sí
-Vacunas,DUDOSA,3,sí
-Ciclo Celular,DUDOSA,3,sí
-Medicina de Emergencias,DUDOSA,2,sí
-Arte,DUDOSA,2,sí
-Cultura y Sociedad,DUDOSA,2,sí
-HLH,DUDOSA,2,sí
-Críticos,DUDOSA,2,sí
-Electrolitos,DUDOSA,1,sí
-Economía de la Salud,DUDOSA,1,sí
-Respiratorio,DUDOSA,1,sí
-Botánica,DUDOSA,1,sí
-Fauna Colombiana,DUDOSA,1,sí
-Crítica,DUDOSA,1,sí
-Terminal,DUDOSA,1,sí
-TBC,DUDOSA,1,sí
-Osteoporosis,DUDOSA,1,sí
-Músculoesquel,DUDOSA,1,sí
-Reanimación,DUDOSA,1,sí
-Malaria,DUDOSA,1,sí
-Emergencia,DUDOSA,1,sí
-ETS,DUDOSA,1,sí
+Derecho,Derecho Médico,9,no
+Derecho Médico,Derecho Médico,5,no
 Dermatología,Dermatología,158,no
 Electrofisiología,Electrofisiología,2,no
 Embriología,Embriología,4,no
@@ -102,14 +71,17 @@ Hematología,Hematología,212,no
 Hematologia,Hematología,1,no
 Hepatología,Hepatología,166,no
 Histología,Histología,1,no
+Medicina Histórica,Historia,10,no
 Infectología,Infectología,647,no
 Infecciosas,Infectología,29,no
+VIH,Infectología,9,no
 Infecciones,Infectología,7,no
 Infeccioso,Infectología,3,no
 Inmunología,Inmunología,33,no
 Legislación Colombiana,Legislación Colombiana,11,no
 Legislación Colombia,Legislación Colombiana,2,no
 Legislación,Legislación Colombiana,2,no
+Literatura,Literatura,9,no
 Logopedia,Logopedia,1,no
 Mamología,Mamología,19,no
 Mastología,Mamología,1,no
@@ -125,6 +97,7 @@ Medicina Interna,Medicina Interna,185,no
 Medicina interna,Medicina Interna,24,no
 Medicina del Trabajo,Medicina Laboral,1,no
 Medicina Laboral,Medicina Laboral,1,no
+Legal,Medicina Legal,12,no
 Medicina legal,Medicina Legal,5,no
 Medicina Legal,Medicina Legal,2,no
 Tropical,Medicina Tropical,1,no
@@ -176,6 +149,31 @@ Medicina Preventiva,Salud Pública,2,no
 Seguridad del paciente,Seguridad del paciente,5,no
 Seguridad social,Seguridad social,2,no
 Sin clasificar,Sin clasificar,20,no
+Trauma,Sin clasificar,6,no
+Geografía,Sin clasificar,5,no
+Música,Sin clasificar,4,no
+Patología,Sin clasificar,4,no
+Vascular,Sin clasificar,3,no
+Vacunas,Sin clasificar,3,no
+Ciclo Celular,Sin clasificar,3,no
+Arte,Sin clasificar,2,no
+Cultura y Sociedad,Sin clasificar,2,no
+HLH,Sin clasificar,2,no
+Críticos,Sin clasificar,2,no
+Electrolitos,Sin clasificar,1,no
+Economía de la Salud,Sin clasificar,1,no
+Respiratorio,Sin clasificar,1,no
+Botánica,Sin clasificar,1,no
+Fauna Colombiana,Sin clasificar,1,no
+Crítica,Sin clasificar,1,no
+Terminal,Sin clasificar,1,no
+TBC,Sin clasificar,1,no
+Osteoporosis,Sin clasificar,1,no
+Músculoesquel,Sin clasificar,1,no
+Reanimación,Sin clasificar,1,no
+Malaria,Sin clasificar,1,no
+Emergencia,Sin clasificar,1,no
+ETS,Sin clasificar,1,no
 Toxicología,Toxicología,49,no
 Trasplantes,Trasplantes,15,no
 Trasplante,Trasplantes,1,no
@@ -183,6 +181,8 @@ Traumatología,Traumatología,30,no
 Urgencias,Urgencias,213,no
 Medicina de urgencias,Urgencias,34,no
 Medicina de Urgencias,Urgencias,31,no
+Emergencias,Urgencias,8,no
+Medicina de Emergencias,Urgencias,2,no
 Uroginecología,Uroginecología,1,no
 Urología,Urología,166,no
 Ética Médica,Ética Médica,5,no
