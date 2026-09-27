@@ -4,12 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado del proyecto
 
-Segunda versión de la app funcionando: Inicio → elegir materia (o Mis fallos) →
+Tercera versión de la app funcionando: Inicio → elegir materia (o Mis fallos) →
 responder preguntas una por una con feedback y explicación. El historial de respuestas
 se guarda en IndexedDB en el dispositivo (no se pierde al cerrar la app), y ya hay
-pantallas de "Mi progreso" (% de aciertos global y por materia) y "Mis fallos"
-(agrupado por materia > tema, con revisión de cada pregunta fallada), más el botón
-"Practicar mis fallos". Sin build ni framework: HTML/CSS/JS simples.
+pantallas de "Mi progreso" (% de aciertos global y por materia), "Mis fallos"
+(agrupado por materia > tema, con revisión de cada pregunta fallada) y "Ajustes"
+(exportar/importar el progreso como archivo). Ahora también es una PWA instalable que
+funciona sin internet (manifest + service worker, ver más abajo). Sin build ni
+framework: HTML/CSS/JS simples.
 
 - [SPEC.md](SPEC.md): especificación completa (alcance final, más allá de esta primera
   versión).
@@ -41,6 +43,14 @@ pantallas de "Mi progreso" (% de aciertos global y por materia) y "Mis fallos"
 - `scripts/validar_preguntas.py`: revisa `datos/preguntas.json` (respuesta correcta
   presente y válida, ids sin duplicar, materia y tema presentes) e imprime un reporte.
   Correr con `python scripts/validar_preguntas.py`.
+- `manifest.json`: metadata de la PWA (nombre, colores, íconos) para que el navegador
+  ofrezca "instalar" la app.
+- `icons/`: íconos de la app en varios tamaños, generados con
+  `scripts/generar_iconos.py` (correr de nuevo solo si se quiere cambiar el diseño).
+- `sw.js`: service worker. Guarda en caché el HTML/CSS/JS y `datos/preguntas.json` la
+  primera vez que se abre la app, para que después funcione sin internet. Si se cambia
+  algún archivo cacheado, subir el número de `CACHE_NOMBRE` en `sw.js` para que se
+  vuelva a descargar.
 
 Para abrir la app localmente hace falta un servidor (no sirve abrir `index.html` con
 doble clic, porque `fetch()` de un archivo local queda bloqueado). Hay un servidor de
