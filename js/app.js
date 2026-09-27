@@ -8,8 +8,10 @@ const contenedor = document.getElementById("app");
 
 let preguntas = [];
 let estados = new Map(); // preguntaId -> estado (ver calcularEstados en js/logica.js)
-let sesion = null; // { nombre, lista, indice, respondida }
+let sesion = null; // { nombre, lista, indice, respondida, respuestas, esCronometro, segundosRestantes, timerId }
 let fallosAbiertos = new Set(); // claves "materia||tema" expandidas en la pantalla de Mis fallos
+
+const CANTIDADES_CRONOMETRO = [10, 20, 50, 100];
 
 function escaparHtml(texto) {
   const div = document.createElement("div");
@@ -32,7 +34,7 @@ function renderInicio() {
     <button class="boton boton-secundario" id="btn-ajustes">Ajustes</button>
   `;
 
-  document.getElementById("btn-practicar").addEventListener("click", renderElegirMateria);
+  document.getElementById("btn-practicar").addEventListener("click", renderElegirModo);
   document.getElementById("btn-fallos-ver").addEventListener("click", renderFallos);
   document.getElementById("btn-progreso").addEventListener("click", renderProgreso);
   document.getElementById("btn-ajustes").addEventListener("click", renderAjustes);
@@ -43,13 +45,49 @@ function renderInicio() {
   }
 }
 
-function renderElegirMateria() {
-  const materias = materiasConConteo(preguntas);
-  const filas = materias
+function renderElegirModo() {
+  contenedor.innerHTML = `
+    <h1>¿Cómo querés practicar?</h1>
+    <button class="boton" id="btn-libre">Práctica libre</button>
+    <button class="boton boton-secundario" id="btn-cronometro">Práctica con cronómetro</button>
+    <button class="boton boton-secundario" id="btn-volver">Volver al inicio</button>
+  `;
+
+  document.getElementById("btn-libre").addEventListener("click", () => renderElegirCategoria("libre"));
+  document.getElementById("btn-cronometro").addEventListener("click", () => renderElegirCategoria("cronometro"));
+  document.getElementById("btn-volver").addEventListener("click", renderInicio);
+}
+
+function renderElegirCategoria(modo) {
+  contenedor.innerHTML = `
+    <h1>¿Cómo querés elegir las preguntas?</h1>
+    <button class="boton" id="btn-materia">Por especialidad</button>
+    <button class="boton boton-secundario" id="btn-universidad">Por universidad</button>
+    <button class="boton boton-secundario" id="btn-volver">Volver</button>
+  `;
+
+  document.getElementById("btn-materia").addEventListener("click", () => renderElegirValor(modo, "materia"));
+  document.getElementById("btn-universidad").addEventListener("click", () => renderElegirValor(modo, "universidad"));
+  document.getElementById("btn-volver").addEventListener("click", renderElegirModo);
+}
+
+function nombreTodas(categoria) {
+  return categoria === "universidad" ? "Todas las universidades" : "Todas las materias";
+}
+
+function filtrarPorCategoria(categoria, valor) {
+  return categoria === "universidad" ? filtrarPorUniversidad(preguntas, valor) : filtrarPorMateria(preguntas, valor);
+}
+
+function renderElegirValor(modo, categoria) {
+  const opciones = categoria === "universidad" ? universidadesConConteo(preguntas) : materiasConConteo(preguntas);
+  const titulo = categoria === "universidad" ? "Elegí una universidad" : "Elegí una materia";
+
+  const filas = opciones
     .map(
       ([nombre, cantidad]) => `
       <li>
-        <button class="materia-item" data-materia="${escaparHtml(nombre)}">
+        <button class="materia-item" data-valor="${escaparHtml(nombre)}">
           <span>${escaparHtml(nombre)}</span>
           <span class="conteo">${cantidad}</span>
         </button>
@@ -58,28 +96,72 @@ function renderElegirMateria() {
     .join("");
 
   contenedor.innerHTML = `
-    <h1>Elegí una materia</h1>
+    <h1>${titulo}</h1>
     <ul class="lista-materias">
       <li>
-        <button class="materia-item" data-materia="">
-          <span>Todas las materias</span>
+        <button class="materia-item" data-valor="">
+          <span>${nombreTodas(categoria)}</span>
           <span class="conteo">${preguntas.length}</span>
         </button>
       </li>
       ${filas}
     </ul>
-    <button class="boton boton-secundario" id="btn-volver">Volver al inicio</button>
+    <button class="boton boton-secundario" id="btn-volver">Volver</button>
   `;
 
   contenedor.querySelectorAll(".materia-item").forEach((boton) => {
-    boton.addEventListener("click", () => iniciarSesion(boton.dataset.materia));
+    boton.addEventListener("click", () => {
+      const valor = boton.dataset.valor;
+      if (modo === "cronometro") {
+        renderElegirCantidad(categoria, valor);
+      } else {
+        iniciarSesionLibre(categoria, valor);
+      }
+    });
   });
-  document.getElementById("btn-volver").addEventListener("click", renderInicio);
+  document.getElementById("btn-volver").addEventListener("click", () => renderElegirCategoria(modo));
 }
 
-function iniciarSesion(materia) {
-  const lista = mezclar(filtrarPorMateria(preguntas, materia));
-  iniciarSesionConLista(lista, materia || "Todas las materias");
+function renderElegirCantidad(categoria, valor) {
+  const disponibles = filtrarPorCategoria(categoria, valor).length;
+  const opciones = CANTIDADES_CRONOMETRO.filter((n) => n <= disponibles);
+  if (opciones.length === 0) opciones.push(disponibles);
+
+  const filas = opciones
+    .map((cantidad) => {
+      const minutos = calcularTiempoSugeridoMinutos(cantidad);
+      return `
+        <li>
+          <button class="materia-item" data-cantidad="${cantidad}">
+            <span>${cantidad} preguntas</span>
+            <span class="conteo">~${minutos} min</span>
+          </button>
+        </li>`;
+    })
+    .join("");
+
+  contenedor.innerHTML = `
+    <h1>¿Cuántas preguntas?</h1>
+    <p class="subtitulo">${disponibles.toLocaleString("es")} preguntas disponibles con este filtro</p>
+    <ul class="lista-materias">${filas}</ul>
+    <button class="boton boton-secundario" id="btn-volver">Volver</button>
+  `;
+
+  contenedor.querySelectorAll(".materia-item").forEach((boton) => {
+    boton.addEventListener("click", () => iniciarSesionCronometro(categoria, valor, Number(boton.dataset.cantidad)));
+  });
+  document.getElementById("btn-volver").addEventListener("click", () => renderElegirValor("cronometro", categoria));
+}
+
+function iniciarSesionLibre(categoria, valor) {
+  const lista = mezclar(filtrarPorCategoria(categoria, valor));
+  iniciarSesionConLista(lista, valor || nombreTodas(categoria));
+}
+
+function iniciarSesionCronometro(categoria, valor, cantidad) {
+  const lista = mezclar(filtrarPorCategoria(categoria, valor)).slice(0, cantidad);
+  const segundos = calcularTiempoSugeridoMinutos(cantidad) * 60;
+  iniciarSesionConLista(lista, valor || nombreTodas(categoria), segundos);
 }
 
 function practicarFallos() {
@@ -87,15 +169,49 @@ function practicarFallos() {
   iniciarSesionConLista(lista, "Mis fallos");
 }
 
-function iniciarSesionConLista(lista, nombre) {
+function iniciarSesionConLista(lista, nombre, segundosCronometro) {
+  if (sesion && sesion.timerId) clearInterval(sesion.timerId);
+
   sesion = {
     nombre,
     lista,
     indice: 0,
     respondida: false,
+    respuestas: lista.map(() => null), // null = sin responder, true/false = resultado
+    esCronometro: Boolean(segundosCronometro),
+    segundosRestantes: segundosCronometro || null,
+    timerId: null,
   };
 
+  if (sesion.esCronometro) {
+    sesion.timerId = setInterval(tickCronometro, 1000);
+  }
+
   renderPregunta();
+}
+
+function tickCronometro() {
+  if (!sesion || !sesion.esCronometro) return;
+
+  sesion.segundosRestantes -= 1;
+  const elementoTiempo = document.getElementById("tiempo-restante");
+  if (elementoTiempo) elementoTiempo.textContent = formatearTiempo(sesion.segundosRestantes);
+
+  if (sesion.segundosRestantes <= 0) {
+    terminarPorTiempo();
+  }
+}
+
+function terminarPorTiempo() {
+  clearInterval(sesion.timerId);
+  sesion.timerId = null;
+  renderResumenSesion();
+}
+
+function salirDeSesion() {
+  if (sesion && sesion.timerId) clearInterval(sesion.timerId);
+  sesion = null;
+  renderInicio();
 }
 
 function renderPregunta() {
@@ -113,7 +229,11 @@ function renderPregunta() {
     .join("");
 
   contenedor.innerHTML = `
-    <p class="progreso">${escaparHtml(sesion.nombre)} · ${sesion.indice + 1} / ${total}</p>
+    <div class="barra-sesion">
+      <p class="progreso">${escaparHtml(sesion.nombre)} · ${sesion.indice + 1} / ${total}</p>
+      ${sesion.esCronometro ? `<p class="cronometro" id="tiempo-restante">${formatearTiempo(sesion.segundosRestantes)}</p>` : ""}
+      <button class="boton-salir" id="btn-salir">Salir</button>
+    </div>
     <div class="etiquetas">
       <span class="etiqueta">${escaparHtml(pregunta.universidad)}</span>
       ${pregunta.materia.map((m) => `<span class="etiqueta">${escaparHtml(m)}</span>`).join("")}
@@ -127,6 +247,7 @@ function renderPregunta() {
   contenedor.querySelectorAll(".opcion").forEach((boton) => {
     boton.addEventListener("click", () => responder(boton.dataset.clave));
   });
+  document.getElementById("btn-salir").addEventListener("click", salirDeSesion);
 }
 
 function responder(claveElegida) {
@@ -146,6 +267,7 @@ function responder(claveElegida) {
   guardarIntento(intento).catch((error) => {
     console.error("No se pudo guardar la respuesta", error);
   });
+  sesion.respuestas[sesion.indice] = correcta;
 
   contenedor.querySelectorAll(".opcion").forEach((boton) => {
     boton.disabled = true;
@@ -167,20 +289,44 @@ function responder(claveElegida) {
   }
 
   const esUltima = esUltimaPregunta(sesion);
-  const textoBoton = esUltima ? "Volver al inicio" : "Siguiente";
+  const textoBoton = esUltima ? (sesion.esCronometro ? "Ver resumen" : "Volver al inicio") : "Siguiente";
   document.getElementById("siguiente-contenedor").innerHTML = `
     <button class="boton" id="btn-siguiente">${textoBoton}</button>
   `;
   document.getElementById("btn-siguiente").addEventListener("click", () => {
     if (esUltima) {
-      sesion = null;
-      renderInicio();
+      if (sesion.esCronometro) {
+        if (sesion.timerId) clearInterval(sesion.timerId);
+        renderResumenSesion();
+      } else {
+        salirDeSesion();
+      }
     } else {
       sesion.indice += 1;
       sesion.respondida = false;
       renderPregunta();
     }
   });
+}
+
+function renderResumenSesion() {
+  const resumen = calcularResumenSesion(sesion.respuestas);
+
+  contenedor.innerHTML = `
+    <h1>Resumen de la sesión</h1>
+    <p class="subtitulo">${escaparHtml(sesion.nombre)}</p>
+    <div class="tarjeta-stat">
+      <p class="stat-numero">${resumen.correctas}/${resumen.total}</p>
+      <p class="stat-etiqueta">Respuestas correctas</p>
+    </div>
+    <ul class="lista-progreso">
+      <li class="fila-progreso"><span>Incorrectas</span><span class="conteo">${resumen.incorrectas}</span></li>
+      <li class="fila-progreso"><span>Sin responder</span><span class="conteo">${resumen.sinResponder}</span></li>
+    </ul>
+    <button class="boton boton-secundario" id="btn-volver">Volver al inicio</button>
+  `;
+
+  document.getElementById("btn-volver").addEventListener("click", salirDeSesion);
 }
 
 function renderProgreso() {

@@ -149,28 +149,38 @@ Punto de entrada. Botones grandes y simples (pensado para uso desde el celular):
 - Estadísticas
 - Ajustes / Respaldo
 
-### 4.2 Práctica libre — configuración
-Antes de iniciar la sesión, el usuario elige:
-- Especialidad(es) (multi-selección; opción "todas")
-- Universidad/banco de examen (opcional, multi-selección; opción "todas")
-- Cantidad de preguntas para esta sesión (el usuario la escribe/selecciona cada vez, sin
-  valor por defecto fijo)
+### 4.2 Practicar — configuración
+Al tocar "Practicar" en Inicio, el usuario elige, en este orden:
+1. **Modo**: práctica libre o práctica con cronómetro (ver 4.3).
+2. **Cómo elegir las preguntas**: por especialidad o por universidad (selección única,
+   no combinada; opción "todas" en ambos casos). No se combinan ambos filtros a la vez
+   en esta versión (eso queda para más adelante si hace falta).
+3. Si el modo es cronómetro: **cantidad de preguntas**, eligiendo entre botones
+   prearmados (10/20/50/100, solo se muestran los que entran dentro de lo disponible
+   con ese filtro) — ver 4.3. En práctica libre no se pide cantidad: se practican todas
+   las preguntas que queden tras el filtro elegido.
 
 Al confirmar, arranca la pantalla de pregunta (4.5) con ese conjunto filtrado y
 mezclado al azar.
 
-### 4.3 Simulacro cronometrado — configuración
-El usuario elige cuántas preguntas quiere (ej. 20, 50, 100). La app calcula y muestra un
-tiempo sugerido (≈1.5 min por pregunta) antes de empezar. Durante el simulacro se ve un
-cronómetro corriendo. El feedback sigue siendo inmediato tras cada pregunta (igual que
-en los demás modos — no se oculta hasta el final). Si el tiempo se agota, la sesión
-termina y pasa directo al resumen (4.6) con las preguntas no respondidas marcadas como
-tal.
+### 4.3 Práctica con cronómetro
+Además de elegir la cantidad de preguntas (ver 4.2), la app calcula y muestra un tiempo
+sugerido (≈1.5 min por pregunta, redondeado hacia arriba) antes de empezar. Durante la
+sesión se ve un cronómetro corriendo cerca del progreso. El feedback sigue siendo
+inmediato tras cada pregunta (igual que en los demás modos — no se oculta hasta el
+final). Si el tiempo se agota, la sesión termina sola y pasa directo a un resumen
+(puntaje, incorrectas y preguntas sin responder). En práctica libre no hay resumen: al
+terminar la última pregunta se vuelve directo a Inicio.
 
 ### 4.4 Mis fallos — practicar
-Arranca directo una sesión con todas las preguntas que actualmente tienen
-`enFallos = true` (con opción de filtrar antes por especialidad, reutilizando el mismo
-selector que 4.2).
+Arranca directo una sesión (modo libre, sin cronómetro) con todas las preguntas que
+actualmente tienen `enFallos = true`, sin pedir más filtros.
+
+### 4.4bis Salir de una sesión a mitad de camino
+En cualquier momento de una sesión (antes o después de responder la pregunta actual) hay
+un botón "Salir" que vuelve a Inicio. Como cada respuesta se guarda en cuanto se
+contesta (ver 3.2), salir a mitad de camino **no pierde nada** de lo ya respondido; solo
+se descartan las preguntas de esa sesión que todavía no se habían contestado.
 
 ### 4.5 Pantalla de pregunta (compartida por todos los modos)
 - Muestra el enunciado, las opciones como botones grandes.
@@ -187,9 +197,12 @@ selector que 4.2).
 - Barra de progreso de la sesión (ej. "7 / 20").
 
 ### 4.6 Resumen de sesión
-Al terminar una sesión (de cualquier modo): puntaje (aciertos/total), tiempo tomado (si
-aplica), y lista de las preguntas de esa sesión con su resultado, con posibilidad de
-volver a leer la explicación de cualquiera.
+Se muestra solo al terminar una sesión con cronómetro (por tiempo agotado o por
+responder la última pregunta): puntaje, cantidad de incorrectas y cantidad de preguntas
+sin responder. **Simplificación de esta versión**: no incluye todavía la lista de
+preguntas de la sesión para volver a leer su explicación (para eso están "Mis fallos" y
+el historial de progreso). La práctica libre no pasa por este resumen: al terminar
+vuelve directo a Inicio.
 
 ### 4.7 Mis fallos — resumen
 Lista agrupada **por especialidad y, dentro de cada una, por tema**, ordenada del tema

@@ -35,6 +35,47 @@ function materiasConConteo(preguntas) {
   return [...conteo.entries()].sort((a, b) => b[1] - a[1]);
 }
 
+function filtrarPorUniversidad(preguntas, universidad) {
+  if (!universidad) return preguntas.slice();
+  return preguntas.filter((p) => p.universidad === universidad);
+}
+
+function universidadesConConteo(preguntas) {
+  const conteo = new Map();
+  for (const p of preguntas) {
+    conteo.set(p.universidad, (conteo.get(p.universidad) || 0) + 1);
+  }
+  return [...conteo.entries()].sort((a, b) => b[1] - a[1]);
+}
+
+// --- Práctica con cronómetro (ver SPEC.md 4.3) ---
+
+// Tiempo sugerido para un simulacro, a razón de ~1.5 minutos por pregunta.
+function calcularTiempoSugeridoMinutos(cantidadPreguntas, minutosPorPregunta = 1.5) {
+  return Math.ceil(cantidadPreguntas * minutosPorPregunta);
+}
+
+// Convierte segundos a "MM:SS" para mostrar el cronómetro en pantalla.
+function formatearTiempo(segundosTotales) {
+  const segundos = Math.max(0, Math.round(segundosTotales));
+  const minutos = Math.floor(segundos / 60);
+  const segundosRestantes = segundos % 60;
+  const dosDigitos = (n) => String(n).padStart(2, "0");
+  return `${dosDigitos(minutos)}:${dosDigitos(segundosRestantes)}`;
+}
+
+// Cuenta correctas/incorrectas/sin responder de una sesión. `respuestas` es un arreglo
+// paralelo a la lista de preguntas de la sesión: true (acertada), false (fallada) o
+// null (todavía sin responder, ej. porque se acabó el tiempo).
+function calcularResumenSesion(respuestas) {
+  return {
+    total: respuestas.length,
+    correctas: respuestas.filter((r) => r === true).length,
+    incorrectas: respuestas.filter((r) => r === false).length,
+    sinResponder: respuestas.filter((r) => r === null).length,
+  };
+}
+
 // --- Progreso: guardar intentos y derivar estado por pregunta (ver SPEC.md 3.2 y 3.3) ---
 
 function estadoInicial(preguntaId) {
@@ -215,6 +256,11 @@ if (typeof module !== "undefined" && module.exports) {
     filtrarPorMateria,
     mezclar,
     materiasConConteo,
+    filtrarPorUniversidad,
+    universidadesConConteo,
+    calcularTiempoSugeridoMinutos,
+    formatearTiempo,
+    calcularResumenSesion,
     estadoInicial,
     aplicarIntento,
     calcularEstados,

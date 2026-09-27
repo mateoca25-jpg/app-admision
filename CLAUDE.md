@@ -4,12 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado del proyecto
 
-Tercera versión de la app funcionando: Inicio → elegir materia (o Mis fallos) →
-responder preguntas una por una con feedback y explicación. El historial de respuestas
-se guarda en IndexedDB en el dispositivo (no se pierde al cerrar la app), y ya hay
+Cuarta versión de la app funcionando: Inicio → Practicar (elegir modo libre/cronómetro,
+luego especialidad o universidad, y si es cronómetro la cantidad de preguntas) →
+responder preguntas una por una con feedback y explicación, con un botón "Salir" para
+terminar en cualquier momento sin perder lo ya respondido. El historial de respuestas se
+guarda en IndexedDB en el dispositivo (no se pierde al cerrar la app), y ya hay
 pantallas de "Mi progreso" (% de aciertos global y por materia), "Mis fallos"
 (agrupado por materia > tema, con revisión de cada pregunta fallada) y "Ajustes"
-(exportar/importar el progreso como archivo). Ahora también es una PWA instalable que
+(exportar/importar el progreso como archivo). También es una PWA instalable que
 funciona sin internet (manifest + service worker, ver más abajo). Sin build ni
 framework: HTML/CSS/JS simples.
 
@@ -19,10 +21,11 @@ framework: HTML/CSS/JS simples.
   (DOM); la lógica de calificar, filtrar, mezclar y calcular progreso vive aparte en
   `js/logica.js` para poder probarla sin navegador.
 - `js/logica.js`: funciones puras (sin DOM) — `esRespuestaCorrecta`, `esUltimaPregunta`,
-  `filtrarPorMateria`, `mezclar`, `materiasConConteo`, y las de progreso:
-  `aplicarIntento`, `calcularEstados`, `preguntasEnFallos`, `calcularEstadisticas`,
-  `agruparFallosPorMateria`. Se carga como `<script>` normal en `index.html` y también
-  con `require()` desde las pruebas.
+  `filtrarPorMateria`, `mezclar`, `materiasConConteo`, `filtrarPorUniversidad`,
+  `universidadesConConteo`, `calcularTiempoSugeridoMinutos`, `formatearTiempo`,
+  `calcularResumenSesion`, y las de progreso: `aplicarIntento`, `calcularEstados`,
+  `preguntasEnFallos`, `calcularEstadisticas`, `agruparFallosPorMateria`. Se carga como
+  `<script>` normal en `index.html` y también con `require()` desde las pruebas.
 - `js/almacenamiento.js`: guarda y lee el historial de respuestas (`Intento`) en
   IndexedDB. Es la única parte que toca el navegador directamente; por eso no se prueba
   con `node --test` (no hay IndexedDB en Node), solo `js/logica.js`.

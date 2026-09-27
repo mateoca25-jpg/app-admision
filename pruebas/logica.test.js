@@ -10,6 +10,11 @@ const {
   filtrarPorMateria,
   mezclar,
   materiasConConteo,
+  filtrarPorUniversidad,
+  universidadesConConteo,
+  calcularTiempoSugeridoMinutos,
+  formatearTiempo,
+  calcularResumenSesion,
   estadoInicial,
   aplicarIntento,
   calcularEstados,
@@ -117,6 +122,67 @@ test("materiasConConteo: ordena de mayor a menor cantidad", () => {
   const conteo = materiasConConteo(preguntas);
   assert.equal(conteo[0][0], "Comun");
   assert.equal(conteo[0][1], 3);
+});
+
+// --- filtrarPorUniversidad / universidadesConConteo: practicar por universidad ---
+
+test("filtrarPorUniversidad: sin universidad devuelve todas las preguntas", () => {
+  const preguntas = [{ universidad: "UDEA" }, { universidad: "UIS" }];
+  assert.equal(filtrarPorUniversidad(preguntas, "").length, 2);
+  assert.equal(filtrarPorUniversidad(preguntas, null).length, 2);
+});
+
+test("filtrarPorUniversidad: incluye solo preguntas de esa universidad", () => {
+  const preguntas = [
+    { id: 1, universidad: "UDEA" },
+    { id: 2, universidad: "UIS" },
+  ];
+  const resultado = filtrarPorUniversidad(preguntas, "UDEA");
+  assert.equal(resultado.length, 1);
+  assert.equal(resultado[0].id, 1);
+});
+
+test("universidadesConConteo: cuenta cuantas preguntas tiene cada universidad", () => {
+  const preguntas = [{ universidad: "UDEA" }, { universidad: "UDEA" }, { universidad: "UIS" }];
+  const conteo = new Map(universidadesConConteo(preguntas));
+  assert.equal(conteo.get("UDEA"), 2);
+  assert.equal(conteo.get("UIS"), 1);
+});
+
+test("universidadesConConteo: ordena de mayor a menor cantidad", () => {
+  const preguntas = [{ universidad: "Rara" }, { universidad: "Comun" }, { universidad: "Comun" }];
+  const conteo = universidadesConConteo(preguntas);
+  assert.equal(conteo[0][0], "Comun");
+  assert.equal(conteo[0][1], 2);
+});
+
+// --- calcularTiempoSugeridoMinutos / formatearTiempo / calcularResumenSesion: cronómetro ---
+
+test("calcularTiempoSugeridoMinutos: usa 1.5 minutos por pregunta redondeando hacia arriba", () => {
+  assert.equal(calcularTiempoSugeridoMinutos(20), 30);
+  assert.equal(calcularTiempoSugeridoMinutos(10), 15);
+  assert.equal(calcularTiempoSugeridoMinutos(1), 2);
+});
+
+test("formatearTiempo: da formato MM:SS con ceros a la izquierda", () => {
+  assert.equal(formatearTiempo(0), "00:00");
+  assert.equal(formatearTiempo(59), "00:59");
+  assert.equal(formatearTiempo(60), "01:00");
+  assert.equal(formatearTiempo(125), "02:05");
+});
+
+test("formatearTiempo: nunca muestra segundos negativos", () => {
+  assert.equal(formatearTiempo(-5), "00:00");
+});
+
+test("calcularResumenSesion: cuenta correctas, incorrectas y sin responder", () => {
+  const resumen = calcularResumenSesion([true, false, true, null, null]);
+  assert.deepEqual(resumen, { total: 5, correctas: 2, incorrectas: 1, sinResponder: 2 });
+});
+
+test("calcularResumenSesion: una sesión totalmente respondida no tiene sin responder", () => {
+  const resumen = calcularResumenSesion([true, true, false]);
+  assert.equal(resumen.sinResponder, 0);
 });
 
 // --- aplicarIntento / calcularEstados: guardar respuestas y derivar "Mis fallos" ---
