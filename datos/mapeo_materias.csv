@@ -172,7 +172,6 @@ Osteoporosis,Sin clasificar,1,no
 Músculoesquel,Sin clasificar,1,no
 Reanimación,Sin clasificar,1,no
 Malaria,Sin clasificar,1,no
-Emergencia,Sin clasificar,1,no
 ETS,Sin clasificar,1,no
 Toxicología,Toxicología,49,no
 Trasplantes,Trasplantes,15,no
@@ -183,6 +182,7 @@ Medicina de urgencias,Urgencias,34,no
 Medicina de Urgencias,Urgencias,31,no
 Emergencias,Urgencias,8,no
 Medicina de Emergencias,Urgencias,2,no
+Emergencia,Urgencias,1,no
 Uroginecología,Uroginecología,1,no
 Urología,Urología,166,no
 Ética Médica,Ética Médica,5,no

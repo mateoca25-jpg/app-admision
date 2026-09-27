@@ -84,7 +84,7 @@ MAPEO = {
     "Electrofisiología": ("Electrofisiología", False),
     "Electrolitos": ("Sin clasificar", False),
     "Embriología": ("Embriología", False),
-    "Emergencia": ("Sin clasificar", False),
+    "Emergencia": ("Urgencias", False),
     "Emergencias": ("Urgencias", False),
     "Endocrino": ("Endocrinología", False),
     "Endocrinología": ("Endocrinología", False),
