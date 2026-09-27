@@ -1,5 +1,6 @@
 // App de práctica - primera versión: Inicio -> elegir materia -> responder una por una.
 // Sin IndexedDB, sin estadísticas ni "mis fallos" todavía (ver SPEC.md para el alcance completo).
+// La lógica de calificar respuestas, filtrar y mezclar vive en js/logica.js (con pruebas propias).
 
 const contenedor = document.getElementById("app");
 
@@ -12,25 +13,6 @@ function escaparHtml(texto) {
   return div.innerHTML;
 }
 
-function mezclar(lista) {
-  const copia = lista.slice();
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
-}
-
-function materiasConConteo() {
-  const conteo = new Map();
-  for (const p of preguntas) {
-    for (const m of p.materia) {
-      conteo.set(m, (conteo.get(m) || 0) + 1);
-    }
-  }
-  return [...conteo.entries()].sort((a, b) => b[1] - a[1]);
-}
-
 function renderInicio() {
   contenedor.innerHTML = `
     <h1>Práctica examen de admisión</h1>
@@ -41,7 +23,7 @@ function renderInicio() {
 }
 
 function renderElegirMateria() {
-  const materias = materiasConConteo();
+  const materias = materiasConConteo(preguntas);
   const filas = materias
     .map(
       ([nombre, cantidad]) => `
@@ -73,13 +55,9 @@ function renderElegirMateria() {
 }
 
 function iniciarSesion(materia) {
-  const filtradas = materia
-    ? preguntas.filter((p) => p.materia.includes(materia))
-    : preguntas;
-
   sesion = {
     materia: materia || "Todas las materias",
-    lista: mezclar(filtradas),
+    lista: mezclar(filtrarPorMateria(preguntas, materia)),
     indice: 0,
     respondida: false,
   };
@@ -106,8 +84,8 @@ function renderPregunta() {
     <div class="etiquetas">
       <span class="etiqueta">${escaparHtml(pregunta.universidad)}</span>
       ${pregunta.materia.map((m) => `<span class="etiqueta">${escaparHtml(m)}</span>`).join("")}
-      <span class="etiqueta">${escaparHtml(pregunta.tema)}</span>
     </div>
+    <p class="tema">${escaparHtml(pregunta.tema)}</p>
     <p class="enunciado">${escaparHtml(pregunta.enunciado)}</p>
     <div id="opciones">${opcionesHtml}</div>
     <div id="explicacion-contenedor"></div>
@@ -127,9 +105,10 @@ function responder(claveElegida) {
 
   contenedor.querySelectorAll(".opcion").forEach((boton) => {
     boton.disabled = true;
-    if (boton.dataset.clave === pregunta.respuesta_correcta) {
+    const clave = boton.dataset.clave;
+    if (esRespuestaCorrecta(pregunta, clave)) {
       boton.classList.add("correcta");
-    } else if (boton.dataset.clave === claveElegida) {
+    } else if (clave === claveElegida) {
       boton.classList.add("incorrecta");
     }
   });
@@ -143,7 +122,7 @@ function responder(claveElegida) {
     `;
   }
 
-  const esUltima = sesion.indice === sesion.lista.length - 1;
+  const esUltima = esUltimaPregunta(sesion);
   const textoBoton = esUltima ? "Volver al inicio" : "Siguiente";
   document.getElementById("siguiente-contenedor").innerHTML = `
     <button class="boton" id="btn-siguiente">${textoBoton}</button>

@@ -121,6 +121,12 @@ h1 {
   border-radius: 999px;
 }
 
+.tema {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0 0 14px;
+}
+
 .enunciado {
   font-size: 1.15rem;
   margin-bottom: 20px;

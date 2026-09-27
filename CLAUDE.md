@@ -4,24 +4,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado del proyecto
 
-Todavía no hay scaffolding de la app (sin `package.json`, sin build, sin tests de la
-app en sí). Lo que sí existe:
+Primera versión de la app funcionando: Inicio → elegir materia → responder preguntas
+una por una con feedback y explicación (sin estadísticas, sin Mis fallos, sin guardar
+historial todavía — eso viene después). Sin build ni framework: HTML/CSS/JS simples.
 
-- [SPEC.md](SPEC.md): especificación completa.
+- [SPEC.md](SPEC.md): especificación completa (alcance final, más allá de esta primera
+  versión).
+- `index.html`, `css/estilos.css`, `js/app.js`: la app. `js/app.js` solo maneja pantalla
+  (DOM); la lógica de calificar, filtrar y mezclar vive aparte en `js/logica.js` para
+  poder probarla sin navegador.
+- `js/logica.js`: funciones puras (sin DOM) — `esRespuestaCorrecta`, `esUltimaPregunta`,
+  `filtrarPorMateria`, `mezclar`, `materiasConConteo`. Se carga como `<script>` normal en
+  `index.html` y también con `require()` desde las pruebas.
+- `pruebas/logica.test.js`: pruebas de `js/logica.js` con el test runner que trae Node
+  (sin dependencias). Correr con `node --test` desde la raíz del proyecto.
 - `datos/Banco_de_10000_Preguntas.xlsx`: banco de preguntas fuente (no se toca a mano).
 - `datos/preguntas.json`: banco de preguntas ya convertido (generado, no se edita a
   mano — ver regla más abajo).
-- `datos/preguntas_excluidas.json`: preguntas del Excel que no se pudieron convertir
-  (sin opciones parseables, sin respuesta correcta, o con respuesta correcta que no
-  coincide con ninguna opción), con el motivo de cada una, para revisión manual.
+- `datos/preguntas_excluidas.json`: preguntas del Excel que no se pudieron convertir,
+  con el motivo de cada una, para revisión manual.
+- `datos/mapeo_materias.csv`: mapeo de las variantes de "Especialidad" del Excel a un
+  nombre de materia final único (ya aplicado a `preguntas.json`).
 - `scripts/convertir_excel.py`: regenera `datos/preguntas.json` desde el Excel. Correr
   con `python scripts/convertir_excel.py` cada vez que se edite el Excel.
+- `scripts/generar_mapeo_materias.py` / `scripts/aplicar_mapeo_materias.py`: regeneran y
+  aplican `datos/mapeo_materias.csv` (solo hace falta si aparecen materias nuevas al
+  reconvertir el Excel).
 - `scripts/validar_preguntas.py`: revisa `datos/preguntas.json` (respuesta correcta
   presente y válida, ids sin duplicar, materia y tema presentes) e imprime un reporte.
   Correr con `python scripts/validar_preguntas.py`.
 
-Cuando se agregue el scaffolding real de la app (`package.json`, build, tests),
-actualiza esta sección con los comandos reales — no los inventes mientras tanto.
+Para abrir la app localmente hace falta un servidor (no sirve abrir `index.html` con
+doble clic, porque `fetch()` de un archivo local queda bloqueado). Hay un servidor de
+prueba configurado en `.claude/launch.json` (`python -m http.server 8123`).
+
+Cuando se agregue scaffolding real (`package.json`, build), actualiza esta sección con
+los comandos reales — no los inventes mientras tanto.
 
 ## Arquitectura (ver SPEC.md para el detalle completo)
 
