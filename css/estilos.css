@@ -187,6 +187,21 @@ h1 {
   cursor: default;
 }
 
+/* Ajustes */
+.oculto {
+  display: none;
+}
+
+.mensaje-ajustes {
+  min-height: 1.4em;
+  color: var(--color-correcto);
+  font-size: 0.9rem;
+}
+
+.mensaje-ajustes.mensaje-error {
+  color: var(--color-incorrecto);
+}
+
 /* Lista de materias */
 .lista-materias {
   list-style: none;

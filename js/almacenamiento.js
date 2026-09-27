@@ -39,3 +39,19 @@ async function obtenerTodosIntentos() {
     solicitud.onerror = () => reject(solicitud.error);
   });
 }
+
+// Borra todo el historial guardado y lo reemplaza por el que viene de un archivo de
+// respaldo importado (ver Importar progreso en Ajustes), conservando los mismos `id`.
+async function reemplazarTodosIntentos(intentos) {
+  const db = await abrirDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(ALMACEN_INTENTOS, "readwrite");
+    const almacen = tx.objectStore(ALMACEN_INTENTOS);
+    almacen.clear();
+    for (const intento of intentos) {
+      almacen.put(intento);
+    }
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}

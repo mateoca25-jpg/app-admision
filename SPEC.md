@@ -206,11 +206,13 @@ Pantalla simple de solo lectura:
 - Lista de % de aciertos por especialidad
 
 ### 4.9 Ajustes / Respaldo
-- "Guardar copia": descarga el archivo de respaldo (ver 3.4).
-- "Restaurar copia": permite elegir un archivo de respaldo previamente guardado y
-  recupera el historial de intentos.
+- "Exportar progreso": descarga el archivo de respaldo (ver 3.4), pensado para pasar el
+  historial entre dispositivos (ej. del computador al celular).
+- "Importar progreso": permite elegir un archivo de respaldo previamente exportado y
+  **reemplaza** todo el historial de intentos guardado en este dispositivo por el del
+  archivo (no lo mezcla con lo que ya había).
 - Información de versión del banco de preguntas (fecha de la última conversión del
-  Excel, cantidad de preguntas incluidas).
+  Excel, cantidad de preguntas incluidas) — todavía no implementado.
 
 ---
 

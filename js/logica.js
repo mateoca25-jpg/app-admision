@@ -168,6 +168,46 @@ function agruparFallosPorMateria(preguntas, estados) {
   return materias;
 }
 
+// --- Respaldo: exportar/importar el historial de intentos (ver SPEC.md 3.4 y 4.9) ---
+
+const VERSION_RESPALDO = 1;
+
+// Arma el archivo de respaldo a partir del historial de intentos. `fecha` se puede fijar
+// explícitamente (para pruebas); si no se da, usa el momento actual.
+function crearRespaldo(intentos, fecha = new Date().toISOString()) {
+  return {
+    version: VERSION_RESPALDO,
+    fecha,
+    intentos: intentos.map((intento) => ({ ...intento })),
+  };
+}
+
+// Valida un respaldo ya parseado (objeto JS, no texto) y devuelve su lista de intentos
+// lista para guardar. Lanza un Error con un mensaje entendible si el archivo no sirve.
+function intentosDesdeRespaldo(respaldo) {
+  if (!respaldo || typeof respaldo !== "object") {
+    throw new Error("El archivo no tiene el formato esperado.");
+  }
+  if (respaldo.version !== VERSION_RESPALDO) {
+    throw new Error("El archivo es de una versión de respaldo distinta a la que espera esta app.");
+  }
+  if (!Array.isArray(respaldo.intentos)) {
+    throw new Error("El archivo no contiene un historial de respuestas válido.");
+  }
+
+  return respaldo.intentos.map((intento, indice) => {
+    if (
+      !intento ||
+      typeof intento.preguntaId !== "number" ||
+      typeof intento.correcta !== "boolean" ||
+      typeof intento.fecha !== "string"
+    ) {
+      throw new Error(`La respuesta #${indice + 1} del archivo no tiene un formato válido.`);
+    }
+    return { ...intento };
+  });
+}
+
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     esRespuestaCorrecta,
@@ -181,5 +221,7 @@ if (typeof module !== "undefined" && module.exports) {
     preguntasEnFallos,
     calcularEstadisticas,
     agruparFallosPorMateria,
+    crearRespaldo,
+    intentosDesdeRespaldo,
   };
 }

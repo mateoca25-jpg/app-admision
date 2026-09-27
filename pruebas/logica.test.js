@@ -16,6 +16,8 @@ const {
   preguntasEnFallos,
   calcularEstadisticas,
   agruparFallosPorMateria,
+  crearRespaldo,
+  intentosDesdeRespaldo,
 } = require("../js/logica.js");
 
 test("esRespuestaCorrecta: true cuando la clave elegida es la correcta", () => {
@@ -282,4 +284,53 @@ test("agruparFallosPorMateria: una pregunta que ya salió de fallos no aparece",
   ]);
   const grupos = agruparFallosPorMateria(preguntas, estados);
   assert.equal(grupos.length, 0);
+});
+
+// --- crearRespaldo / intentosDesdeRespaldo: exportar e importar el progreso ---
+
+test("crearRespaldo: incluye version, fecha e intentos", () => {
+  const intentos = [{ id: 1, preguntaId: 10, correcta: true, fecha: "2026-01-01" }];
+  const respaldo = crearRespaldo(intentos, "2026-01-05T10:00:00.000Z");
+  assert.equal(respaldo.version, 1);
+  assert.equal(respaldo.fecha, "2026-01-05T10:00:00.000Z");
+  assert.deepEqual(respaldo.intentos, intentos);
+});
+
+test("crearRespaldo: no modifica el arreglo original ni comparte referencias", () => {
+  const intentos = [{ id: 1, preguntaId: 10, correcta: true, fecha: "2026-01-01" }];
+  const respaldo = crearRespaldo(intentos, "2026-01-05");
+  respaldo.intentos[0].correcta = false;
+  assert.equal(intentos[0].correcta, true);
+});
+
+test("intentosDesdeRespaldo: recupera exactamente los mismos intentos exportados (ida y vuelta)", () => {
+  const intentos = [
+    { id: 1, preguntaId: 10, opcionElegida: "A", correcta: true, fecha: "2026-01-01T08:00:00.000Z" },
+    { id: 2, preguntaId: 11, opcionElegida: "C", correcta: false, fecha: "2026-01-02T09:00:00.000Z" },
+  ];
+  const respaldo = crearRespaldo(intentos, "2026-01-05T10:00:00.000Z");
+  const recuperados = intentosDesdeRespaldo(JSON.parse(JSON.stringify(respaldo)));
+  assert.deepEqual(recuperados, intentos);
+});
+
+test("intentosDesdeRespaldo: rechaza un archivo que no es un objeto", () => {
+  assert.throws(() => intentosDesdeRespaldo(null));
+  assert.throws(() => intentosDesdeRespaldo("texto cualquiera"));
+});
+
+test("intentosDesdeRespaldo: rechaza una version de respaldo distinta", () => {
+  assert.throws(() => intentosDesdeRespaldo({ version: 99, intentos: [] }));
+});
+
+test("intentosDesdeRespaldo: rechaza si intentos no es una lista", () => {
+  assert.throws(() => intentosDesdeRespaldo({ version: 1, intentos: "no es una lista" }));
+});
+
+test("intentosDesdeRespaldo: rechaza un intento sin los campos mínimos", () => {
+  assert.throws(() =>
+    intentosDesdeRespaldo({ version: 1, intentos: [{ preguntaId: 1, correcta: true }] })
+  );
+  assert.throws(() =>
+    intentosDesdeRespaldo({ version: 1, intentos: [{ preguntaId: "1", correcta: true, fecha: "2026-01-01" }] })
+  );
 });

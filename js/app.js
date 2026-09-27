@@ -29,11 +29,13 @@ function renderInicio() {
     </button>
     <button class="boton boton-secundario" id="btn-fallos-ver">Mis fallos</button>
     <button class="boton boton-secundario" id="btn-progreso">Mi progreso</button>
+    <button class="boton boton-secundario" id="btn-ajustes">Ajustes</button>
   `;
 
   document.getElementById("btn-practicar").addEventListener("click", renderElegirMateria);
   document.getElementById("btn-fallos-ver").addEventListener("click", renderFallos);
   document.getElementById("btn-progreso").addEventListener("click", renderProgreso);
+  document.getElementById("btn-ajustes").addEventListener("click", renderAjustes);
 
   const btnPracticarFallos = document.getElementById("btn-fallos-practicar");
   if (cantidadFallos > 0) {
@@ -332,6 +334,71 @@ function renderRevisionPregunta(pregunta) {
   `;
 
   document.getElementById("btn-volver").addEventListener("click", renderFallos);
+}
+
+function renderAjustes() {
+  contenedor.innerHTML = `
+    <h1>Ajustes</h1>
+    <button class="boton boton-secundario" id="btn-exportar">Exportar progreso</button>
+    <button class="boton boton-secundario" id="btn-importar">Importar progreso</button>
+    <input type="file" id="input-importar" accept="application/json" class="oculto" />
+    <p id="mensaje-ajustes" class="mensaje-ajustes"></p>
+    <button class="boton boton-secundario" id="btn-volver">Volver al inicio</button>
+  `;
+
+  document.getElementById("btn-exportar").addEventListener("click", exportarProgreso);
+  document.getElementById("btn-importar").addEventListener("click", () => {
+    document.getElementById("input-importar").click();
+  });
+  document.getElementById("input-importar").addEventListener("change", importarProgreso);
+  document.getElementById("btn-volver").addEventListener("click", renderInicio);
+}
+
+function mostrarMensajeAjustes(texto, esError) {
+  const mensaje = document.getElementById("mensaje-ajustes");
+  if (!mensaje) return;
+  mensaje.textContent = texto;
+  mensaje.classList.toggle("mensaje-error", Boolean(esError));
+}
+
+async function exportarProgreso() {
+  try {
+    const intentos = await obtenerTodosIntentos();
+    const respaldo = crearRespaldo(intentos);
+
+    const blob = new Blob([JSON.stringify(respaldo, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = `respaldo-app-admision-${respaldo.fecha.slice(0, 10)}.json`;
+    enlace.click();
+    URL.revokeObjectURL(url);
+
+    mostrarMensajeAjustes(`Se exportaron ${intentos.length} respuestas guardadas.`);
+  } catch (error) {
+    console.error(error);
+    mostrarMensajeAjustes("No se pudo exportar el progreso.", true);
+  }
+}
+
+async function importarProgreso(evento) {
+  const archivo = evento.target.files[0];
+  evento.target.value = "";
+  if (!archivo) return;
+
+  try {
+    const texto = await archivo.text();
+    const respaldo = JSON.parse(texto);
+    const intentos = intentosDesdeRespaldo(respaldo);
+
+    await reemplazarTodosIntentos(intentos);
+    estados = calcularEstados(intentos);
+
+    mostrarMensajeAjustes(`Se importaron ${intentos.length} respuestas. Reemplazaron el historial anterior.`);
+  } catch (error) {
+    console.error(error);
+    mostrarMensajeAjustes(`No se pudo importar el archivo: ${error.message}`, true);
+  }
 }
 
 async function iniciar() {
