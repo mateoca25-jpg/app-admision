@@ -179,8 +179,11 @@ selector que 4.2).
 - Se registra un `Intento` en cuanto el usuario responde.
 - Botón "Siguiente" para avanzar (el usuario controla el ritmo, no hay avance
   automático).
-- Muestra discretamente `especialidad`, `tema` y `universidad` de la pregunta actual
-  (como etiquetas pequeñas, no intrusivas).
+- Muestra discretamente `especialidad` y `universidad` de la pregunta actual (como
+  etiquetas pequeñas, no intrusivas). **No muestra `tema`** mientras se está
+  respondiendo: al ser casi único por pregunta, puede orientar hacia la respuesta
+  correcta (sesgo). El `tema` sí se muestra al revisar una pregunta ya fallada desde
+  "Mis fallos" (ahí no hay respuesta que sesgar).
 - Barra de progreso de la sesión (ej. "7 / 20").
 
 ### 4.6 Resumen de sesión
@@ -189,11 +192,12 @@ aplica), y lista de las preguntas de esa sesión con su resultado, con posibilid
 volver a leer la explicación de cualquiera.
 
 ### 4.7 Mis fallos — resumen
-Lista agrupada **por especialidad** (no por tema, porque el tema es casi único por
-pregunta y no sirve como categoría de resumen). Por cada especialidad con fallos
-pendientes se muestra el conteo total, y al entrar se despliega la lista de preguntas
-falladas de esa especialidad mostrando su `tema` como subtítulo de cada una. Desde aquí
-se puede lanzar "Practicar estos fallos" para esa especialidad o para todas.
+Lista agrupada **por especialidad y, dentro de cada una, por tema**, ordenada del tema
+con más fallos al que menos (y las especialidades entre sí, también de más a menos
+fallos). Cada tema muestra su conteo de fallos y se puede desplegar para ver las
+preguntas falladas de ese tema; desde ahí se puede abrir cualquiera para revisar su
+enunciado, la opción correcta y la explicación. El botón "Practicar mis fallos" (en
+Inicio) arranca una sesión con todas las preguntas falladas del banco completo.
 
 ### 4.8 Estadísticas
 Pantalla simple de solo lectura:

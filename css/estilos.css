@@ -70,6 +70,123 @@ h1 {
   border: 2px solid var(--color-primario);
 }
 
+.boton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Mi progreso */
+.tarjeta-stat {
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.stat-numero {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin: 0;
+}
+
+.stat-etiqueta {
+  color: #666;
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+.lista-progreso {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.fila-progreso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.fila-progreso .conteo {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+/* Mis fallos */
+.grupo-materia {
+  margin-bottom: 20px;
+}
+
+.grupo-materia h2 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.grupo-materia h2 .conteo {
+  color: #777;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.lista-temas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tema-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 8px;
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tema-item .conteo {
+  color: var(--color-incorrecto);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.lista-preguntas-fallo {
+  list-style: none;
+  margin: -4px 0 10px;
+  padding: 0 0 0 10px;
+}
+
+.pregunta-fallo-item {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: #f5f6f8;
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.opcion-revision {
+  cursor: default;
+}
+
 /* Lista de materias */
 .lista-materias {
   list-style: none;

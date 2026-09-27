@@ -4,18 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado del proyecto
 
-Primera versión de la app funcionando: Inicio → elegir materia → responder preguntas
-una por una con feedback y explicación (sin estadísticas, sin Mis fallos, sin guardar
-historial todavía — eso viene después). Sin build ni framework: HTML/CSS/JS simples.
+Segunda versión de la app funcionando: Inicio → elegir materia (o Mis fallos) →
+responder preguntas una por una con feedback y explicación. El historial de respuestas
+se guarda en IndexedDB en el dispositivo (no se pierde al cerrar la app), y ya hay
+pantallas de "Mi progreso" (% de aciertos global y por materia) y "Mis fallos"
+(agrupado por materia > tema, con revisión de cada pregunta fallada), más el botón
+"Practicar mis fallos". Sin build ni framework: HTML/CSS/JS simples.
 
 - [SPEC.md](SPEC.md): especificación completa (alcance final, más allá de esta primera
   versión).
 - `index.html`, `css/estilos.css`, `js/app.js`: la app. `js/app.js` solo maneja pantalla
-  (DOM); la lógica de calificar, filtrar y mezclar vive aparte en `js/logica.js` para
-  poder probarla sin navegador.
+  (DOM); la lógica de calificar, filtrar, mezclar y calcular progreso vive aparte en
+  `js/logica.js` para poder probarla sin navegador.
 - `js/logica.js`: funciones puras (sin DOM) — `esRespuestaCorrecta`, `esUltimaPregunta`,
-  `filtrarPorMateria`, `mezclar`, `materiasConConteo`. Se carga como `<script>` normal en
-  `index.html` y también con `require()` desde las pruebas.
+  `filtrarPorMateria`, `mezclar`, `materiasConConteo`, y las de progreso:
+  `aplicarIntento`, `calcularEstados`, `preguntasEnFallos`, `calcularEstadisticas`,
+  `agruparFallosPorMateria`. Se carga como `<script>` normal en `index.html` y también
+  con `require()` desde las pruebas.
+- `js/almacenamiento.js`: guarda y lee el historial de respuestas (`Intento`) en
+  IndexedDB. Es la única parte que toca el navegador directamente; por eso no se prueba
+  con `node --test` (no hay IndexedDB en Node), solo `js/logica.js`.
 - `pruebas/logica.test.js`: pruebas de `js/logica.js` con el test runner que trae Node
   (sin dependencias). Correr con `node --test` desde la raíz del proyecto.
 - `datos/Banco_de_10000_Preguntas.xlsx`: banco de preguntas fuente (no se toca a mano).
