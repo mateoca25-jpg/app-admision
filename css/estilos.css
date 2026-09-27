@@ -1,0 +1,179 @@
+:root {
+  --color-fondo: #f5f6f8;
+  --color-texto: #1f2430;
+  --color-primario: #2563eb;
+  --color-correcto: #16a34a;
+  --color-incorrecto: #dc2626;
+  --color-borde: #d7dae0;
+  --color-tarjeta: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  min-height: 100vh;
+}
+
+.cargando {
+  text-align: center;
+  margin-top: 40px;
+  color: #666;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 8px 0 4px;
+}
+
+.subtitulo {
+  color: #555;
+  margin: 0 0 28px;
+}
+
+/* Botones grandes, pensados para tocar con el pulgar */
+.boton {
+  display: block;
+  width: 100%;
+  padding: 18px 16px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-primario);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.boton:active {
+  opacity: 0.85;
+}
+
+.boton-secundario {
+  background: var(--color-tarjeta);
+  color: var(--color-primario);
+  border: 2px solid var(--color-primario);
+}
+
+/* Lista de materias */
+.lista-materias {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.materia-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 10px;
+  background: var(--color-tarjeta);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  font-size: 1.05rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.materia-item .conteo {
+  color: #777;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+/* Pantalla de pregunta */
+.progreso {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.etiqueta {
+  background: #e8ebf1;
+  color: #444;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.enunciado {
+  font-size: 1.15rem;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.opcion {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: var(--color-tarjeta);
+  border: 2px solid var(--color-borde);
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.opcion .clave {
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.opcion:disabled {
+  cursor: default;
+}
+
+.opcion.correcta {
+  border-color: var(--color-correcto);
+  background: #e9f9ee;
+}
+
+.opcion.incorrecta {
+  border-color: var(--color-incorrecto);
+  background: #fcebea;
+}
+
+.explicacion {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fff9e6;
+  border: 1px solid #f0dfa0;
+  border-radius: 12px;
+  white-space: pre-line;
+}
+
+.explicacion h2 {
+  font-size: 1rem;
+  margin: 0 0 8px;
+}
+
+.siguiente-contenedor {
+  margin-top: 24px;
+}
